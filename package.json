@@ -1,0 +1,15 @@
+{
+  "name": "my-lang",
+  "version": "1.0.0",
+  "description": "This project implements a simple compiler in JavaScript for a custom programming language. The compiler consists of multiple components including lexer, parser, code generator, and runner. It takes input code written in the custom language, processes it, generates executable JavaScript code, and then executes it.",
+  "main": "compile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "fetch": "^1.1.0",
+    "fs": "^0.0.1-security"
+  }
+}

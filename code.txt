@@ -1,0 +1,5 @@
+consider x = 20
+consider y = 20
+
+consider sum = x + y
+print sum

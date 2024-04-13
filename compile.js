@@ -1,3 +1,6 @@
+const fs = require('fs');
+
+
 function lexer(input) {
   const tokens = [];
   let cursor = 0;
@@ -12,7 +15,7 @@ function lexer(input) {
 
     if (/[a-zA-Z]/.test(char)) {
       let word = "";
-      while (/[a-zA-Z0-9]/.test(char)) {
+      while (cursor < input.length && /[a-zA-Z0-9]/.test(char)) {
         word += char;
         char = input[++cursor];
       }
@@ -31,7 +34,7 @@ function lexer(input) {
     }
     if (/[0-9]/.test(char)) {
       let num = "";
-      while (/[0-9]/.test(char)) {
+      while (cursor < input.length && /[0-9]/.test(char)) {
         num += char;
         char = input[++cursor];
       }
@@ -49,6 +52,8 @@ function lexer(input) {
       cursor++;
       continue;
     }
+    // if none of the above conditions match, it is an invalid character
+    throw new Error(`Invalid Character found: ${char}`)
   }
   return tokens;
 }
@@ -108,12 +113,33 @@ function runner(input){
   eval(input)
 }
 
-const code = `
-consider x = 10
-consider y = 20
+// const code = `
+// consider x = 10
+// consider y = 20
 
-consider sum = x + y
-print sum
-`;
-const exec = compiler(code);
-runner(exec)
+// consider sum = x + y
+// print sum
+// `;
+
+const filename = './code.txt';
+fs.readFile(filename, (err,data)=>{
+  if(err){
+    console.error(`Error reading the file ${filename}: ${err}`);
+    return;
+  }
+
+  const code = data.toString();
+  console.log('code from file');
+  console.log(code);
+
+  try{
+    const exec = compiler(code);
+    runner(exec);
+  }catch(err){
+    console.error(`Error compiling or running code: ${err}`)
+  }
+})
+
+
+// const exec = compiler(code);
+// runner(exec)
